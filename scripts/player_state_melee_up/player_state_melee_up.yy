@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "zOLD",
-    "path": "folders/Scripts/zOLD.yy",
+    "name": "Player States",
+    "path": "folders/Scripts/Player States.yy",
   },
   "resourceVersion": "1.0",
-  "name": "player_state_dash",
+  "name": "player_state_melee_up",
   "tags": [],
   "resourceType": "GMScript",
 }
