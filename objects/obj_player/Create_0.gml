@@ -1,27 +1,32 @@
-/// @description Key variables
-/// @description 
+/// @description Set player variables
 
-//key_left = ord("A");
-//key_right = ord("D");
-//key_jump = vk_space;
+// Health and action points
+ap_max = 100;
+ap_current = ap_max;
 
+// Action point requirements
+_first_jump_ap = 10;
+_second_jump_ap = 10;
+_wall_jump_ap = 10;
+_dash_ap = 80;
+
+// Running 
 _accel = 0.2;
 _decel = 0.8;
 _max_speed = 2;
 
+// Jumping
+jump_max = 2;
+jump_current = jump_max;
 _jump_height = -5;
 dbl_jump_height = -3;
 _grav = .3;
-_wall_grav = .05;
 
+// Dashing
 _dash_speed = _max_speed * 4; 
-//_dash_counter = 0;
 
+// Melee
 _melee_delay = 15;
-
-
-jump_max = 2;
-jump_current = jump_max;
 
 x_speed = 0;
 y_speed = 0;

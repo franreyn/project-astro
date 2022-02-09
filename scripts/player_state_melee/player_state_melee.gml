@@ -15,6 +15,7 @@ function player_state_melee(){
 			image_index = 0;
 			image_speed = 1;
 			x_speed = 0;
+			ap_current -= 10;
 		} 
 	}
 	

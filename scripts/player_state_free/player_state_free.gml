@@ -1,5 +1,5 @@
 function player_state_free(){
-
+//==
 	var input_left = gamepad_button_check(4, gp_padl) || keyboard_check(ord("A"));
 	var input_right = gamepad_button_check(4, gp_padr) || keyboard_check(ord("D"));
 	var input_up = gamepad_button_check(4, gp_padu) || keyboard_check(ord("W"));
@@ -11,8 +11,8 @@ function player_state_free(){
 	var input_melee = gamepad_button_check_pressed(4, gp_face3) || keyboard_check_pressed(ord("J"));
 	var input_ranged = gamepad_button_check_pressed(4, gp_face2) || keyboard_check_pressed(ord("K"));
 
-	facing = place_meeting(x - 1, y , obj_wall) - place_meeting(x + 1, y , obj_wall);
-
+	facing = place_meeting(x - 1, y, obj_wall) - place_meeting(x + 1, y, obj_wall);
+	 
 	#region Horizontal movement
 	
 		// Input calculation
@@ -23,26 +23,24 @@ function player_state_free(){
 			x_speed += x_input * _accel;
 			x_speed = clamp(x_speed, -_max_speed, _max_speed);
 		} else {
-			if(x_speed > _decel) {
-				x_speed -= _decel;
-			} else if (x_speed < -_decel) {
-				x_speed += _decel;
-			} else {
-				x_speed = 0;
-			}
+			if (x_speed > _decel) { x_speed -= _decel; } 
+			else if (x_speed < -_decel) { x_speed += _decel;} 
+			else { x_speed = 0; }
 		}
 	
-		// Horizontal collision
-		x_collisions(obj_wall);
-		x_collisions(obj_platform);
-		
 		//Dash
-		if (input_dash && !is_dashing) {
+		if (input_dash) && (!is_dashing) && (ap_current > 0) {
 			is_dashing = true;
+			ap_current -= _dash_ap;
 			x_speed +=  image_xscale * _dash_speed;
 			y_speed += 0;
 		}
 		if (abs(x_speed) < _max_speed) { is_dashing = false; }
+		
+		// Horizontal collision
+		x_collisions(obj_wall);
+		x_collisions(obj_platform);		
+		
 		//============
 			x += x_speed;
 		//============
@@ -52,22 +50,24 @@ function player_state_free(){
 	#region Vertical movement
 
 		//Wall slide and add gravity to vertical movement
-		if (facing != 0) && (input_grab) { y_speed = min(y_speed + 1, 0); }
+		if (facing != 0) && (input_grab) && (ap_current > 0) { y_speed = min(y_speed + 1, 0); ap_current -= .05; }
 		else { y_speed += _grav; }
 	
 		//Jump
-		if (input_jump) && (jump_current > 0) {
-			if(is_grounded(obj_wall) || is_grounded(obj_platform)) {
+		// jumping from ground
+		if (input_jump) && (ap_current > 0) {
+			if(is_grounded(obj_platform)) {
 				y_speed += _jump_height;
-				jump_current -= 1;
+				ap_current -= _first_jump_ap;
 			} 
-			else if (!is_grounded(obj_wall) || !is_grounded(obj_platform)) && (facing != 0) {
+			// is a on wall
+			else if (!is_grounded(obj_platform)) && (facing != 0) {
 				y_speed = _jump_height;
 				x_speed = facing * (_max_speed * 4);
-				jump_current -= 1;
+				ap_current -= _wall_jump_ap;
 			} else {
 				y_speed = dbl_jump_height;
-				jump_current -= 1;
+				ap_current -= _second_jump_ap;
 			}
 		}
 		
@@ -76,8 +76,7 @@ function player_state_free(){
 	
 		//Vertical collision
 		y_collisions(obj_wall);
-		y_collisions(obj_platform);
-		
+		y_collisions(obj_platform);	
 		
 		//===========
 		y += y_speed;
@@ -88,7 +87,7 @@ function player_state_free(){
 	#region Sprite Animation
 
 		//Animation
-		if (!is_grounded(obj_wall) && !is_grounded(obj_platform)) {
+		if (!is_grounded(obj_platform)) {
 			sprite_index = spr_player_air;
 			image_speed = 0;
 			if (x_speed > 0) image_index = 1; else image_index = 0;
@@ -120,9 +119,9 @@ function player_state_free(){
 	}
 	
 	
-
-	
+	// Action points regen
+	if (is_grounded(obj_platform) && !is_dashing) { ap_current = lerp(ap_current, ap_max, .15); } 
 	
 	#endregion
-
+//=
 }

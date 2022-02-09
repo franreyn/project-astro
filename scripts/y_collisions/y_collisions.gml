@@ -9,7 +9,8 @@ function y_collisions(_obj){
 			y += sign(y_speed);
 		}
 		y_speed = 0;
-		jump_current = jump_max;
+		//jump_current = jump_max;
+		//ap_current = ap_max;
 	}
 	
 }
