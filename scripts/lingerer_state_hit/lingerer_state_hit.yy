@@ -2,11 +2,11 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "Global",
-    "path": "folders/Scripts/Global.yy",
+    "name": "Zombie",
+    "path": "folders/Scripts/Enemy Scripts/Zombie.yy",
   },
   "resourceVersion": "1.0",
-  "name": "y_collisions",
+  "name": "lingerer_state_hit",
   "tags": [],
   "resourceType": "GMScript",
 }

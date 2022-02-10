@@ -20,3 +20,20 @@ if (input_jump) && (jump_current > 0){
 		jump_current -= 1;
 	}
 }
+
+//Shaun's melee attack
+	var _list = ds_list_create();
+	var _num = instance_place_list(x, y, obj_enemy, _list, false);
+			
+	if (_num > 0) {
+		for (var i = 0; i < _num; i++) {
+			var hit_id = ds_list_find_value(_list, i);
+			if (ds_list_find_index(hit_by_attack, hit_id) == -1) {
+				ds_list_add(hit_by_attack, hit_id);
+				with (hit_id) {
+					// Do what with attack
+				}
+			}
+		} 
+	}	
+	ds_list_destroy(_list);

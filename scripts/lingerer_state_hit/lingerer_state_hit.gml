@@ -1,7 +1,7 @@
-function lingerer_state_idle() {
+function lingerer_state_hit() {
 	
 	// Add gravity
-	x_speed = 0;
+	x_speed += image_xscale * -0.3;
 	y_speed += 1;
 	
 	x_collisions(obj_platform);
@@ -13,8 +13,12 @@ function lingerer_state_idle() {
 	y += y_speed;
 	
 	// Sprite animation
-	sprite_index = spr_zombie1_idle;
+	sprite_index = spr_zombie1_hit;
+	
+	hp_current -= 1;
 	
 	// Transitions
-	if (collision_line(x - 64, y, x + 64, y, obj_player, false, false)) { _enemy_state = enemy_state.chase; }
+	if (image_index > image_number - 1) {
+		_enemy_state = enemy_state.chase;
+	}
 }

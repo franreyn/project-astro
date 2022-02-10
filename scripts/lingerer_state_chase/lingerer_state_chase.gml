@@ -1,4 +1,4 @@
-function lingerer_state_chase( ){
+function lingerer_state_chase(){
 
 	// Get player position
 	//dirx = sign(obj_player.x - x);
@@ -25,4 +25,5 @@ function lingerer_state_chase( ){
 	
 	// Transitions
 	if (!collision_circle(x, y, 360, obj_player, false, false)) { _enemy_state = enemy_state.idle; }
+	if (collision_line(x - 32, y, x + 32, y, obj_player, false, false)) { _enemy_state = enemy_state.attack; }
 }

@@ -16,6 +16,10 @@ function player_state_melee(){
 			image_speed = 1;
 			x_speed = 0;
 			ap_current -= 10;
+			
+			// Attack
+			var hitbox = instance_create_layer(x + image_xscale * 16, y, "Instances", obj_hitbox);
+			hitbox.creator = id;			
 		} 
 	}
 	
