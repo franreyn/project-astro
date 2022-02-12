@@ -1,22 +1,28 @@
 function lingerer_state_attack(){
 	
-	// Add gravity
-	x_speed = 0;
-	y_speed += 1;
+	enemy_attacking = true;
 	
-	x_collisions(obj_platform);
-	y_collisions(obj_platform);
-	x_collisions(obj_wall);
-	y_collisions(obj_wall);
+	if(enemy_attacking) {
+		// Add gravity
+		x_speed = 0;
+		y_speed += 1;
 	
-	x += x_speed;
-	y += y_speed;
+		x_collisions(obj_platform);
+		y_collisions(obj_platform);
+		x_collisions(obj_wall);
+		y_collisions(obj_wall);
 	
-	// Sprite animation
-	sprite_index = spr_zombie1_attack;
+		x += x_speed;
+		y += y_speed;
 	
-	// Transitions
-	//if (collision_circle(x, y, 64, obj_player, false, false)) { _enemy_state = enemy_state.chase; }
-	if (collision_line(x - 64, y, x + 64, y, obj_player, false, false)) { _enemy_state = enemy_state.chase; }	
-
+		// Sprite animation
+		sprite_index = spr_zombie1_attack;
+	
+		if (image_index > image_number - 1) {
+			// Alarm to set attacking to false
+			alarm[0] = 30;
+			_enemy_state = enemy_state.idle;
+		}		
+	}
+	
 }

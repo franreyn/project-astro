@@ -28,14 +28,13 @@ _dash_speed = _max_speed * 4;
 // Melee
 _melee_delay = 15;
 
-hit_by_attack = ds_list_create();
-
 x_speed = 0;
 y_speed = 0;
 
 is_dashing = false;
 is_melee = false;
 is_ranged = false;
+
 
 
 enum player_state {

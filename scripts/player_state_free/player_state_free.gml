@@ -50,8 +50,13 @@ function player_state_free(){
 	#region Vertical movement
 
 		//Wall slide and add gravity to vertical movement
-		if (facing != 0) && (input_grab) && (ap_current > 0) { y_speed = min(y_speed + 1, 0); ap_current -= .05; }
-		else { y_speed += _grav; }
+		if (facing != 0) && (input_grab) && (ap_current > 0) { 
+			y_speed = min(y_speed + 1, 0); 
+			// subtract ap per frame that you are on wall
+			ap_current -= .05; 
+		} else { 
+			y_speed += _grav;
+		}
 	
 		//Jump
 		// jumping from ground
@@ -88,8 +93,14 @@ function player_state_free(){
 
 		//Animation
 		if (!is_grounded(obj_platform)) {
-			sprite_index = spr_player_air;
-			image_speed = 0;
+			if (facing != 0) { 
+				// Create sprite for player on wall
+				sprite_index = spr_player; 
+				}
+			else {
+				sprite_index = spr_player_air;
+				image_speed = 0;
+			}
 			if (x_speed > 0) image_index = 1; else image_index = 0;
 		} else {	
 			image_speed = 1;
@@ -104,15 +115,16 @@ function player_state_free(){
 
 	#region Transitions
 
+	
 	// Transitions
-	if (input_melee) {
+	if (input_melee) && (facing == 0) {
 			if (!is_melee) {
 				if (input_up) { _player_state = player_state.melee_up; }
-				else if (input_down && !is_grounded(obj_wall)) { _player_state = player_state.melee_down; }
+				else if (input_down && !is_grounded(obj_platform)) { _player_state = player_state.melee_down; }
 				else { _player_state = player_state.melee; }
 			}
 		}
-	if (input_ranged) {
+	if (input_ranged) && (facing == 0) {
 		if (!is_ranged) {
 				_player_state = player_state.ranged; 
 		}

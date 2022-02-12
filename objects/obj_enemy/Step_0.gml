@@ -12,7 +12,10 @@ switch (_enemy_state) {
 	break;
 	
 	case enemy_state.attack: lingerer_state_attack();
-	break;	
+	break;
+	
+	case enemy_state.death: lingerer_state_death();
+	break;
 	
 }
 

@@ -15,6 +15,10 @@ function player_state_melee_up(){
 			image_index = 0;
 			image_speed = 1;
 			x_speed = 0;
+			
+			// Attack
+			instance_create_layer(x, y - 16, "Instances", obj_hitbox);			
+
 		} 
 	}
 	
